@@ -14,12 +14,11 @@
             --primary: #6366f1;
             --secondary: #ec4899;
             --accent-bg: #e0e7ff;
-            --success: #10b981;
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-pill: 50px;
             --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -43,32 +42,36 @@
 
         .page-header { text-align: center; margin-bottom: 3rem; }
         h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: var(--text-dark); }
-        h3 { font-size: 1.3rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent-bg); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.5rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent-bg); padding-bottom: 0.5rem; }
         .subtitle { color: var(--text-light); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
         .reading-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.02); }
+        .question-item { border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+        .question-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
         
         .passage-box { background: #f8fafc; border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #475569; }
         .dialog-box { background: #fff1f2; border-left: 4px solid var(--secondary); padding: 1.2rem; border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-bottom: 1rem; font-size: 0.95rem; }
 
-        /* Question Item Styling */
-        .question-item { border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
-        .question-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-        .q-text { font-weight: 500; margin-bottom: 0.5rem; }
-        .q-answer { color: var(--success); font-weight: 600; display: inline-block; background: #d1fae5; padding: 0.2rem 0.8rem; border-radius: 8px; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        /* Answer box - always visible */
+        .answer-box { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border-radius: 12px; padding: 0.8rem 1rem; margin-top: 1rem; border: 1px solid #bbf7d0; }
+        .answer-box .answer-label { font-weight: 700; color: #16a34a; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem; }
+        .answer-box .answer-text { font-size: 0.95rem; color: var(--text-dark); font-weight: 500; }
 
-        /* Accordion style strictly for Explanations */
-        details { background: var(--accent-bg); border-radius: 12px; padding: 0.4rem 1rem; margin-top: 0.5rem; transition: all 0.3s ease; cursor: pointer; }
-        summary { font-weight: 600; color: var(--primary); font-size: 0.9rem; list-style: none; display: flex; align-items: center; justify-content: space-between; outline: none; }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: '+'; font-size: 1.2rem; }
-        details[open] summary::after { content: '-'; }
-        .answer-content { padding-top: 0.8rem; border-top: 1px solid rgba(99, 102, 241, 0.2); margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-dark); line-height: 1.6; }
+        /* Accordion style for explanations only */
+        details.explanation-toggle { background: var(--accent-bg); border-radius: 12px; padding: 0.5rem 1rem; margin-top: 0.6rem; transition: all 0.3s ease; cursor: pointer; border: 1px solid rgba(99, 102, 241, 0.1); }
+        details.explanation-toggle:hover { background: #d4deff; }
+        details.explanation-toggle summary { font-weight: 600; color: var(--primary); list-style: none; display: flex; align-items: center; justify-content: space-between; outline: none; font-size: 0.9rem; padding: 0.3rem 0; }
+        details.explanation-toggle summary::-webkit-details-marker { display: none; }
+        details.explanation-toggle summary::after { content: '▸'; font-size: 1rem; transition: transform 0.3s ease; }
+        details.explanation-toggle[open] summary::after { transform: rotate(90deg); }
+        .explanation-content { padding-top: 0.8rem; border-top: 1px solid rgba(99, 102, 241, 0.15); margin-top: 0.5rem; font-size: 0.9rem; color: #475569; line-height: 1.6; }
 
         .sub-nav-container { display: flex; justify-content: center; margin-bottom: 2.5rem; }
-        .sub-nav { display: flex; background: #e2e8f0; padding: 0.4rem; border-radius: var(--radius-pill); gap: 0.5rem; flex-wrap: wrap; justify-content: center;}
-        .sub-nav button { background: transparent; border: none; padding: 0.6rem 1.5rem; border-radius: var(--radius-pill); font-weight: 600; color: var(--text-light); cursor: pointer; transition: all 0.3s; }
-        .sub-nav button.active { background: white; color: var(--text-dark); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .sub-nav { display: flex; background: linear-gradient(135deg, #e2e8f0, #eef2f7); padding: 0.5rem; border-radius: var(--radius-lg); gap: 0.4rem; flex-wrap: nowrap; justify-content: center; border: 1px solid #cbd5e1; width: 100%; max-width: 500px; }
+        .sub-nav button { background: transparent; border: none; padding: 0.7rem 1.2rem; border-radius: 12px; font-weight: 600; color: var(--text-light); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-size: 0.9rem; flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; white-space: nowrap; }
+        .sub-nav button:hover { color: var(--primary); background: rgba(255,255,255,0.6); }
+        .sub-nav button.active { background: white; color: var(--primary); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15); font-weight: 700; }
+        .sub-nav button .nav-icon { font-size: 1.1rem; }
         .soal-category-content { display: none; }
         .soal-category-content.active { display: block; animation: slideUp 0.4s ease forwards; }
 
@@ -77,7 +80,11 @@
             .nav-wrapper { top: 10px; margin-bottom: 2rem; }
             nav { padding: 0.6rem 1rem; width: 100%; justify-content: space-between; }
             .nav-links button { padding: 0.5rem 0.8rem; font-size: 0.85rem; }
-            .reading-card { padding: 1.5rem; }
+            .reading-card { padding: 1.2rem; }
+            .sub-nav { padding: 0.4rem; gap: 0.3rem; border-radius: 14px; }
+            .sub-nav button { padding: 0.6rem 0.5rem; font-size: 0.8rem; border-radius: 10px; gap: 0.3rem; }
+            .sub-nav button .nav-icon { font-size: 1rem; }
+            .sub-nav button .nav-label { font-size: 0.78rem; }
         }
     </style>
 </head>
@@ -118,79 +125,99 @@
         <section id="soal" class="content-section">
             <div class="page-header">
                 <h1>Latihan Soal</h1>
-                <p class="subtitle">Jawaban ditampilkan langsung untuk mempermudah. Buka panel untuk membaca penjelasan lengkapnya.</p>
+                <p class="subtitle">Uji pemahamanmu dengan kumpulan soal dari materi Grammar, Reading, dan Listening.</p>
             </div>
             
             <div class="sub-nav-container">
                 <div class="sub-nav">
-                    <button onclick="showSoalCategory('grammar')" id="btn-grammar" class="active">Grammar</button>
-                    <button onclick="showSoalCategory('reading')" id="btn-reading">Reading</button>
-                    <button onclick="showSoalCategory('listening')" id="btn-listening">Listening</button>
+                    <button onclick="showSoalCategory('grammar')" id="btn-grammar" class="active"><span class="nav-icon">✍️</span><span class="nav-label">Grammar</span></button>
+                    <button onclick="showSoalCategory('reading')" id="btn-reading"><span class="nav-icon">📖</span><span class="nav-label">Reading</span></button>
+                    <button onclick="showSoalCategory('listening')" id="btn-listening"><span class="nav-icon">🎧</span><span class="nav-label">Listening</span></button>
                 </div>
             </div>
 
             <div id="grammar" class="soal-category-content active">
                 <div class="reading-card">
-                    <h3>Bagian 1: Basic Structure</h3>
+                    <h3>Bagian 1: Structure & Written Expression</h3>
                     
                     <div class="question-item">
-                        <p class="q-text">1. The president _____ the election by a landslide.</p>
-                        <div class="q-answer">Jawaban: A. Won</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kalimat ini membutuhkan kata kerja lampau (V2) untuk menyatakan kejadian yang sudah selesai (Simple Past Tense). Struktur kalimat: S + V2.</div></details>
+                        <p><strong>1.</strong> The president _____ the election by a landslide. [cite: 3]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. Won [cite: 6]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kalimat ini membutuhkan kata kerja lampau (V2) untuk menyatakan kejadian yang sudah selesai (Simple Past Tense). Struktur kalimat: S + V2. [cite: 7]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">2. When _____ the conference?</p>
-                        <div class="q-answer">Jawaban: B. Did the doctor attend</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Ini adalah kalimat tanya masa lalu (interogatif). Rumusnya adalah Wh-question + did + S + V1.</div></details>
+                        <p><strong>2.</strong> When _____ the conference? [cite: 8]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Did the doctor attend [cite: 10]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Ini adalah kalimat tanya masa lalu (interogatif). Rumusnya adalah Wh-question + did + S + V1. [cite: 12]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">3. _____ range in color from pale yellow to bright orange.</p>
-                        <div class="q-answer">Jawaban: A. Canaries</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kalimat ini membutuhkan Subject (pelaku) di awal kalimat.</div></details>
+                        <p><strong>3.</strong> _____ range in color from pale yellow to bright orange. [cite: 14]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. Canaries [cite: 17]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kalimat ini membutuhkan Subject (pelaku) di awal kalimat. [cite: 18]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">4. Carnivorous plants _____ insects to obtain nitrogen.</p>
-                        <div class="q-answer">Jawaban: D. Generally trap</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Ini adalah Simple Present Tense yang menyatakan fakta umum. Kata keterangan frekuensi (generally) diletakkan sebelum kata kerja utama (trap).</div></details>
+                        <p><strong>4.</strong> Carnivorous plants _____ insects to obtain nitrogen. [cite: 19]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">D. Generally trap [cite: 21]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Ini adalah Simple Present Tense yang menyatakan fakta umum. Kata keterangan frekuensi (generally) diletakkan sebelum kata kerja utama (trap). [cite: 22]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">5. A federal type of government results in _____</p>
-                        <div class="q-answer">Jawaban: A. A vertical distribution of power</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata depan (in) harus diikuti oleh frasa kata benda (Object).</div></details>
+                        <p><strong>5.</strong> A federal type of government results in _____ [cite: 23]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. A vertical distribution of power [cite: 25]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata depan (in) harus diikuti oleh frasa kata benda (Object). [cite: 27]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">6. February normally has twenty-eight days, but every fourth year, _____ has twenty nine.</p>
-                        <div class="q-answer">Jawaban: D. A leap year, it</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Bagian kedua membutuhkan subjek. "A leap year" menjelaskan kondisi, dan "it" bertindak sebagai Subject untuk kata kerja has.</div></details>
+                        <p><strong>6.</strong> February normally has twenty-eight days, but every fourth year, _____ has twenty nine. [cite: 28]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">D. A leap year, it [cite: 29]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Bagian kedua membutuhkan subjek. "A leap year" menjelaskan kondisi, dan "it" bertindak sebagai Subject untuk kata kerja has. [cite: 30]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">7. Evidence suggests that one-quarter of operations _____ bypass surgery may be unnecessary.</p>
-                        <div class="q-answer">Jawaban: C. Involving</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Menggunakan Verb-ing sebagai kata sifat (participle) untuk menjelaskan "operations" (operasi yang melibatkan).</div></details>
+                        <p><strong>7.</strong> Evidence suggests that one-quarter of operations _____ bypass surgery may be unnecessary. [cite: 31, 33]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Involving [cite: 35]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Menggunakan Verb-ing sebagai kata sifat (participle) untuk menjelaskan "operations" (operasi yang melibatkan). [cite: 37, 38]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">8. The Caldecott Medal, _____ for the best children's picture book, is awarded each January.</p>
-                        <div class="q-answer">Jawaban: C. Which is a prize</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kalimat ini membutuhkan klausa penjelas (relative clause) untuk menerangkan subjek "The Caldecott Medal".</div></details>
+                        <p><strong>8.</strong> The Caldecott Medal, _____ for the best children's picture book, is awarded each January. [cite: 39]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Which is a prize [cite: 41]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kalimat ini membutuhkan klausa penjelas (relative clause) untuk menerangkan subjek "The Caldecott Medal". [cite: 43]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">9. The flight instructor, at the air base, said that the orders not to fight had been issued _____</p>
-                        <div class="q-answer">Jawaban: A. When interviewed</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Ini adalah bentuk ringkas dari klausa keterangan waktu (When he was interviewed).</div></details>
+                        <p><strong>9.</strong> The flight instructor, at the air base, said that the orders not to fight had been issued _____ [cite: 44]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. When interviewed [cite: 46]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Ini adalah bentuk ringkas dari klausa keterangan waktu (When he was interviewed). [cite: 48]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">10. In the northern and central parts of the states of Idaho and churning rivers _____</p>
-                        <div class="q-answer">Jawaban: C. Are found majestic mountains</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kalimat ini menggunakan pola inversi (keterangan tempat di depan), sehingga kata kerja (To Be/Verb) muncul sebelum subjek "majestic mountains".</div></details>
+                        <p><strong>10.</strong> In the northern and central parts of the states of Idaho and churning rivers _____ [cite: 49]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Are found majestic mountains [cite: 50]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kalimat ini menggunakan pola inversi (keterangan tempat di depan), sehingga kata kerja (To Be/Verb) muncul sebelum subjek "majestic mountains". [cite: 51]
+                        </div></details>
                     </div>
                 </div>
 
@@ -198,121 +225,159 @@
                     <h3>Bagian 2: Subjunctive & Conditionals</h3>
                     
                     <div class="question-item">
-                        <p class="q-text">1. The manager suggested that he _____ the meeting.</p>
-                        <div class="q-answer">Jawaban: Attend</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata suggested diikuti oleh bentuk Subjunctive, yang berarti kata kerja setelah that harus kembali ke bentuk dasar (V1) tanpa tambahan s/es meskipun subjeknya he.</div></details>
+                        <p><strong>1.</strong> The manager suggested that he _____ the meeting. [cite: 53]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Attend [cite: 55]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata suggested diikuti oleh bentuk Subjunctive, yang berarti kata kerja setelah that harus kembali ke bentuk dasar (V1) tanpa tambahan s/es meskipun subjeknya he. [cite: 56, 57]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">2. If she _____ harder, she would have passed the [test].</p>
-                        <div class="q-answer">Jawaban: Had studied</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Ini adalah Conditional Type 3. Rumusnya: If + S + had + V3 untuk hasil would + have + V3.</div></details>
+                        <p><strong>2.</strong> If she _____ harder, she would have passed the [test]. [cite: 62]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Had studied [cite: 64]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Ini adalah Conditional Type 3. Rumusnya: If + S + had + V3 untuk hasil would + have + V3. [cite: 66]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">3. The newspapers on the table _____ to my friend.</p>
-                        <div class="q-answer">Jawaban: Belong</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Subjeknya adalah "The newspapers" (jamak), maka kata kerja dalam Simple Present tidak ditambah "s".</div></details>
+                        <p><strong>3.</strong> The newspapers on the table _____ to my friend. [cite: 67]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Belong [cite: 69]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Subjeknya adalah "The newspapers" (jamak), maka kata kerja dalam Simple Present tidak ditambah "s". [cite: 70, 71]
+                        </div></details>
                     </div>
                     
                     <div class="question-item">
-                        <p class="q-text">4. He didn't know where _____ from.</p>
-                        <div class="q-answer">Jawaban: She was</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Dalam klausa kata benda (noun clause), urutannya adalah Subject + Verb, bukan seperti kalimat tanya.</div></details>
+                        <p><strong>4.</strong> He didn't know where _____ from. [cite: 72]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">She was [cite: 75]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Dalam klausa kata benda (noun clause), urutannya adalah Subject + Verb, bukan seperti kalimat tanya. [cite: 76, 77]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">5. They decided to cancel the trip, _____?</p>
-                        <div class="q-answer">Jawaban: Didn't they</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kalimat utama menggunakan V2 positif (decided), maka kata tanya ekor (question tag) harus menggunakan did negatif (didn't).</div></details>
+                        <p><strong>5.</strong> They decided to cancel the trip, _____? [cite: 78]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Didn't they [cite: 80]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kalimat utama menggunakan V2 positif (decided), maka kata tanya ekor (question tag) harus menggunakan did negatif (didn't). [cite: 81, 82]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">6. It is necessary that he _____ present at the meeting.</p>
-                        <div class="q-answer">Jawaban: Be</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Setelah frasa It is necessary that, kita menggunakan bentuk Subjunctive dasar yaitu be.</div></details>
+                        <p><strong>6.</strong> It is necessary that he _____ present at the meeting. [cite: 83]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Be [cite: 85]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Setelah frasa It is necessary that, kita menggunakan bentuk Subjunctive dasar yaitu be. [cite: 86]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">7. The teacher insists that every student _____ a notebook.</p>
-                        <div class="q-answer">Jawaban: Have</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata insists memicu bentuk Subjunctive, sehingga kita menggunakan V1 dasar (have), bukan has.</div></details>
+                        <p><strong>7.</strong> The teacher insists that every student _____ a notebook. [cite: 87]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Have [cite: 89]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata insists memicu bentuk Subjunctive, sehingga kita menggunakan V1 dasar (have), bukan has. [cite: 90]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">8. Neither Jake nor his friends _____ at the party last night.</p>
-                        <div class="q-answer">Jawaban: Were</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Untuk pola Neither... nor..., kata kerja mengikuti subjek terdekat (his friends yang jamak), maka gunakan were untuk masa lampau.</div></details>
+                        <p><strong>8.</strong> Neither Jake nor his friends _____ at the party last night. [cite: 91]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Were [cite: 93]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Untuk pola Neither... nor..., kata kerja mengikuti subjek terdekat (his friends yang jamak), maka gunakan were untuk masa lampau. [cite: 95, 96]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">9. He would have come to the meeting if she _____ about it.</p>
-                        <div class="q-answer">Jawaban: Had known</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Ini adalah Conditional Type 3 yang menyatakan penyesalan masa lalu. Rumus bagian if adalah had + V3.</div></details>
+                        <p><strong>9.</strong> He would have come to the meeting if she _____ about it. [cite: 97]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">Had known [cite: 99]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Ini adalah Conditional Type 3 yang menyatakan penyesalan masa lalu. Rumus bagian if adalah had + V3. [cite: 101]
+                        </div></details>
                     </div>
                 </div>
 
                 <div class="reading-card">
-                    <h3>Bagian 3: Pronouns & Tenses Alignment</h3>
+                    <h3>Bagian 3: Additional Grammar & Pronouns</h3>
 
                     <div class="question-item">
-                        <p class="q-text">1. Rina and I went to the library, and we _____ some books.</p>
-                        <div class="q-answer">Jawaban: B. borrowed</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Karena kalimat diawali dengan kata kerja lampau "went" (V2), maka kata kerja selanjutnya juga harus menggunakan Simple Past Tense (V2) untuk menjaga konsistensi waktu.</div></details>
+                        <p><strong>1.</strong> Rina and I went to the library, and we _____ some books. [cite: 103]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. borrowed [cite: 105]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Karena kalimat diawali dengan kata kerja lampau "went" (V2), maka kata kerja selanjutnya juga harus menggunakan Simple Past Tense (V2) untuk menjaga konsistensi waktu. [cite: 106]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">2. The students finished their project, but their teacher _____ it again.</p>
-                        <div class="q-answer">Jawaban: C. checked</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata "finished" menunjukkan kejadian di masa lalu, sehingga aksi guru yang memeriksa kembali juga harus menggunakan bentuk lampau (V2).</div></details>
+                        <p><strong>2.</strong> The students finished their project, but their teacher _____ it again. [cite: 107]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. checked [cite: 108]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata "finished" menunjukkan kejadian di masa lalu, sehingga aksi guru yang memeriksa kembali juga harus menggunakan bentuk lampau (V2). [cite: 109]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">3. My brother lost _____ wallet yesterday.</p>
-                        <div class="q-answer">Jawaban: B. his</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kalimat ini membutuhkan kata ganti kepunyaan (Possessive Pronoun) untuk subjek laki-laki tunggal (My brother).</div></details>
+                        <p><strong>3.</strong> My brother lost _____ wallet yesterday. [cite: 110, 111]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. his [cite: 112]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kalimat ini membutuhkan kata ganti kepunyaan (Possessive Pronoun) untuk subjek laki-laki tunggal (My brother). [cite: 113]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">4. I wanted to call you, _____ my phone was dead.</p>
-                        <div class="q-answer">Jawaban: A. but</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata hubung "but" digunakan untuk menunjukkan pertentangan atau alasan mengapa aksi pertama tidak bisa terlaksana.</div></details>
+                        <p><strong>4.</strong> I wanted to call you, _____ my phone was dead. [cite: 114]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. but [cite: 116]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata hubung "but" digunakan untuk menunjukkan pertentangan atau alasan mengapa aksi pertama tidak bisa terlaksana. [cite: 117]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">5. The girl is crying because her mother _____ her toy.</p>
-                        <div class="q-answer">Jawaban: B. took</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kejadian ibu mengambil mainan terjadi di masa lalu yang menyebabkan anak tersebut menangis, sehingga menggunakan V2 (took).</div></details>
+                        <p><strong>5.</strong> The girl is crying because her mother _____ her toy. [cite: 118]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. took [cite: 121]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kejadian ibu mengambil mainan terjadi di masa lalu yang menyebabkan anak tersebut menangis, sehingga menggunakan V2 (took). [cite: 122]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">6. They invited Sarah and _____ to the party.</p>
-                        <div class="q-answer">Jawaban: B. me</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata ganti ini berfungsi sebagai penerima aksi (Object), sehingga menggunakan "me" bukan subjek "I".</div></details>
+                        <p><strong>6.</strong> They invited Sarah and _____ to the party. [cite: 123]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. me [cite: 125]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata ganti ini berfungsi sebagai penerima aksi (Object), sehingga menggunakan "me" bukan subjek "I". [cite: 126]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">7. She likes reading books, and _____ also enjoys writing stories.</p>
-                        <div class="q-answer">Jawaban: A. she</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Bagian ini membutuhkan kata ganti pelaku (Subject Pronoun) karena ia melakukan aksi "enjoys".</div></details>
+                        <p><strong>7.</strong> She likes reading books, and _____ also enjoys writing stories. [cite: 129, 132]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. she [cite: 130]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Bagian ini membutuhkan kata ganti pelaku (Subject Pronoun) karena ia melakukan aksi "enjoys". [cite: 133]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">8. I couldn't find my shoes, _____ I borrowed my brother's.</p>
-                        <div class="q-answer">Jawaban: A. so</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Kata "so" digunakan untuk menunjukkan hubungan sebab-akibat (karena tidak ketemu, maka meminjam).</div></details>
+                        <p><strong>8.</strong> I couldn't find my shoes, _____ I borrowed my brother's. [cite: 134, 135]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. so [cite: 137]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Kata "so" digunakan untuk menunjukkan hubungan sebab-akibat. [cite: 138]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">9. The teacher praised _____ for their good work.</p>
-                        <div class="q-answer">Jawaban: B. them</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Murid-murid tersebut adalah penerima pujian, maka digunakan kata ganti objek (Object Pronoun) "them".</div></details>
+                        <p><strong>9.</strong> The teacher praised _____ for their good work. [cite: 139]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. them [cite: 140]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Murid-murid tersebut adalah penerima pujian, maka digunakan kata ganti objek (Object Pronoun) "them". [cite: 141]
+                        </div></details>
                     </div>
 
                     <div class="question-item">
-                        <p class="q-text">10. Rani cleaned her room, _____ she forgot to make her bed.</p>
-                        <div class="q-answer">Jawaban: B. but</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Menunjukkan kontradiksi antara membersihkan kamar namun ada yang terlupakan.</div></details>
+                        <p><strong>10.</strong> Rani cleaned her room, _____ she forgot to make her bed. [cite: 142]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. but [cite: 144]</div></div>
+                        <details class="explanation-toggle"><summary>Lihat Penjelasan</summary><div class="explanation-content">
+                            Menunjukkan kontradiksi antara membersihkan kamar namun ada yang terlupakan. [cite: 146]
+                        </div></details>
                     </div>
                 </div>
             </div>
@@ -320,54 +385,115 @@
             <div id="reading" class="soal-category-content">
                 
                 <div class="reading-card">
-                    <h3>Text 1: Exercise Timing</h3>
+                    <h3>Text 1: Exercise</h3>
                     <div class="passage-box">
-                        Many people choose to exercise early in the morning because it helps them feel more energetic throughout the day. Studies show that morning workouts can improve focus, reduce stress, and increase productivity. However, some experts argue that the best time to exercise depends on each person's natural body rhythm.
+                        Many people choose to exercise early in the morning because it helps them feel more energetic throughout the day. [cite: 149] Studies show that morning workouts can improve focus, reduce stress, and increase productivity. [cite: 150] However, some experts argue that the best time to exercise depends on each person's natural body rhythm. [cite: 151]
                     </div>
                     
-                    <div class="question-item"><p class="q-text">1. Why do many people exercise in the morning?</p><div class="q-answer">Jawaban: B. To feel more energetic</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Exercise helps them feel more energetic.</div></details></div>
-                    <div class="question-item"><p class="q-text">2. What do studies show about morning workouts?</p><div class="q-answer">Jawaban: C. They improve focus</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Tercantum langsung di teks: Morning workouts can improve focus.</div></details></div>
-                    <div class="question-item"><p class="q-text">3. What do some experts argue?</p><div class="q-answer">Jawaban: D. The best time depends on individual body rhythm</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Tercantum di kalimat terakhir teks.</div></details></div>
-                    <div class="question-item"><p class="q-text">4. What is the main idea of the passage?</p><div class="q-answer">Jawaban: B. Exercise benefits depend on timing and individuals</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Teks membahas manfaat olahraga pagi dan pandangan pakar mengenai ritme tubuh masing-masing.</div></details></div>
-                    <div class="question-item"><p class="q-text">5. The word "argue" is closest in meaning to...</p><div class="q-answer">Jawaban: B. Claim</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Argue dalam konteks ini berarti menyatakan/mengklaim pendapat.</div></details></div>
+                    <div class="question-item">
+                        <p><strong>1.</strong> Why do many people exercise in the morning? [cite: 152]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. To feel more energetic [cite: 153]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>2.</strong> What do studies show about morning workouts? [cite: 154]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. They improve focus [cite: 155]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>3.</strong> What do some experts argue? [cite: 156]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">D. The best time depends on individual body rhythm [cite: 157]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>4.</strong> What is the main idea of the passage? [cite: 158]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Exercise benefits depend on timing and individuals [cite: 159]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>5.</strong> The word "argue" is closest in meaning to... [cite: 160]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Claim [cite: 161]</div></div>
+                    </div>
                 </div>
 
                 <div class="reading-card">
-                    <h3>Text 2: Travel Habits</h3>
+                    <h3>Text 2: Travel</h3>
                     <div class="passage-box">
-                        Sarah often travels for work, so she spends a lot of time in airports. Over the years, she has learned the importance of packing light and staying organized. She always keeps her documents in one folder and brings only the essentials. This helps her avoid stress and move quickly through security checks.
+                        Sarah often travels for work, so she spends a lot of time in airports. [cite: 163] Over the years, she has learned the importance of packing light and staying organized. [cite: 164] She always keeps her documents in one folder and brings only the essentials. [cite: 165] This helps her avoid stress and move quickly through security checks. [cite: 166]
                     </div>
                     
-                    <div class="question-item"><p class="q-text">6. Why does Sarah spend much time in airports?</p><div class="q-answer">Jawaban: B. She travels for work</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Sesuai kalimat pertama: Sarah often travels for work.</div></details></div>
-                    <div class="question-item"><p class="q-text">7. What has she learned from traveling often?</p><div class="q-answer">Jawaban: C. Staying organized</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">She has learned the importance of packing light and staying organized.</div></details></div>
-                    <div class="question-item"><p class="q-text">8. How does she avoid stress?</p><div class="q-answer">Jawaban: B. By keeping documents together</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">She always keeps her documents in one folder... This helps her avoid stress.</div></details></div>
-                    <div class="question-item"><p class="q-text">9. What is the purpose of the passage?</p><div class="q-answer">Jawaban: A. To describe Sarah's travel habits</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Teks berfokus pada kebiasaan Sarah saat bepergian.</div></details></div>
-                    <div class="question-item"><p class="q-text">10. The word "essentials" refers to...</p><div class="q-answer">Jawaban: C. Necessary things</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Essentials berarti barang yang penting atau perlu saja.</div></details></div>
+                    <div class="question-item">
+                        <p><strong>6.</strong> Why does Sarah spend much time in airports? [cite: 167]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. She travels for work [cite: 168]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>7.</strong> What has she learned from traveling often? [cite: 169]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Staying organized [cite: 170]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>8.</strong> How does she avoid stress? [cite: 171]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. By keeping documents together [cite: 172]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>9.</strong> What is the purpose of the passage? [cite: 173]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. To describe Sarah's travel habits [cite: 174]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>10.</strong> The word "essentials" refers to... [cite: 175]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Necessary things [cite: 176]</div></div>
+                    </div>
                 </div>
 
                 <div class="reading-card">
-                    <h3>Text 3: City Park Renovation</h3>
+                    <h3>Text 3: City Park</h3>
                     <div class="passage-box">
-                        The city park has recently been renovated to provide more space for community activities. A new playground, walking paths, and picnic areas were added. Local residents appreciate the improvements because the park now feels safer and more enjoyable for families.
+                        The city park has recently been renovated to provide more space for community activities. [cite: 178] A new playground, walking paths, and picnic areas were added. [cite: 179] Local residents appreciate the improvements because the park now feels safer and more enjoyable for families. [cite: 180]
                     </div>
                     
-                    <div class="question-item"><p class="q-text">11. What happened to the city park?</p><div class="q-answer">Jawaban: B. It was renovated</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">The city park has recently been renovated.</div></details></div>
-                    <div class="question-item"><p class="q-text">12. What was added to the park?</p><div class="q-answer">Jawaban: C. A playground and paths</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">A new playground, walking paths, and picnic areas were added.</div></details></div>
-                    <div class="question-item"><p class="q-text">13. Why do residents appreciate the changes?</p><div class="q-answer">Jawaban: C. It is safer and more enjoyable</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Because the park now feels safer and more enjoyable for families.</div></details></div>
-                    <div class="question-item"><p class="q-text">14. What is the tone of the passage?</p><div class="q-answer">Jawaban: D. Positive</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Menggunakan kata-kata seperti "appreciate", "safer", dan "enjoyable".</div></details></div>
-                    <div class="question-item"><p class="q-text">15. The word "residents" means...</p><div class="q-answer">Jawaban: B. People who live nearby</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Residents merujuk pada warga lokal/penduduk setempat.</div></details></div>
+                    <div class="question-item">
+                        <p><strong>11.</strong> What happened to the city park? [cite: 181]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. It was renovated [cite: 182]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>12.</strong> What was added to the park? [cite: 183]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. A playground and paths [cite: 184]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>13.</strong> Why do residents appreciate the changes? [cite: 185]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. It is safer and more enjoyable [cite: 186]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>14.</strong> What is the tone of the passage? [cite: 187]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">D. Positive [cite: 188]</div></div>
+                    </div>
+                    <div class="question-item">
+                        <p><strong>15.</strong> The word "residents" means... [cite: 189]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. People who live nearby [cite: 190]</div></div>
+                    </div>
                 </div>
 
                 <div class="reading-card">
                     <h3>Text 4: Online Learning</h3>
                     <div class="passage-box">
-                        Online learning has become increasingly popular in recent years. Many students prefer it because it allows them to study at their own pace. However, some learners struggle with time management and find it difficult to stay motivated without face-to-face interaction.
+                        Online learning has become increasingly popular in recent years. Many students prefer it because it allows them to study at their own pace. [cite: 192] However, some learners struggle with time management and find it difficult to stay motivated without face-to-face interaction. [cite: 193]
                     </div>
-                    <div class="question-item"><p class="q-text">16. Why is online learning popular?</p><div class="q-answer">Jawaban: B. It allows flexible studying</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Allows them to study at their own pace.</div></details></div>
-                    <div class="question-item"><p class="q-text">17. What do some students struggle with?</p><div class="q-answer">Jawaban: C. Managing time</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Some learners struggle with time management.</div></details></div>
-                    <div class="question-item"><p class="q-text">18. What is one disadvantage of online learning?</p><div class="q-answer">Jawaban: B. Lack of motivation</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Find it difficult to stay motivated without face-to-face interaction.</div></details></div>
-                    <div class="question-item"><p class="q-text">19. What is the main idea?</p><div class="q-answer">Jawaban: B. Online learning has benefits and challenges</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Teks menyebutkan kelebihan (fleksibel) dan kekurangan (manajemen waktu/motivasi).</div></details></div>
-                    <div class="question-item"><p class="q-text">20. The phrase "at their own pace" means...</p><div class="q-answer">Jawaban: C. At a speed comfortable for them</div><details><summary>Lihat Penjelasan</summary><div class="answer-content">Pace berarti kecepatan atau ritme yang nyaman bagi mereka.</div></details></div>
+                    <div class="question-item"><p><strong>16.</strong> Why is online learning popular? [cite: 194]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. It allows flexible studying [cite: 195]</div></div></div>
+                    <div class="question-item"><p><strong>17.</strong> What do some students struggle with? [cite: 196]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Managing time [cite: 196]</div></div></div>
+                    <div class="question-item"><p><strong>18.</strong> What is one disadvantage of online learning? [cite: 197]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Lack of motivation [cite: 198]</div></div></div>
+                    <div class="question-item"><p><strong>19.</strong> What is the main idea? [cite: 199]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Online learning has benefits and challenges [cite: 200]</div></div></div>
+                    <div class="question-item"><p><strong>20.</strong> The phrase "at their own pace" means... [cite: 201]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. At a speed comfortable for them [cite: 202]</div></div></div>
+                </div>
+
+                <div class="reading-card">
+                    <h3>Text 5 & 6 & 7: Museum, Company, English Skills</h3>
+                    <div class="passage-box">
+                        <strong>Museum:</strong> The museum recently opened a new exhibition featuring ancient tools and artifacts. [cite: 204] Visitors can learn how early humans hunted, cooked, and built shelters. [cite: 205] The exhibit aims to help people understand the development of human civilization. [cite: 206]<br><br>
+                        <strong>Company:</strong> Many companies now allow employees to work from home. This change began during the pandemic, but it has continued because businesses see benefits such as reduced office costs and higher employee satisfaction. [cite: 218]<br><br>
+                        <strong>English Skills:</strong> Emily wants to improve her English speaking skills, so she practices every day. [cite: 230] She watches English movies, joins online conversations, and records herself to check her pronunciation. [cite: 231]
+                    </div>
+                    <div class="question-item"><p><strong>21.</strong> What does the exhibition show? [cite: 207]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Ancient tools [cite: 208]</div></div></div>
+                    <div class="question-item"><p><strong>22.</strong> What can visitors learn? [cite: 209]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. How early humans lived [cite: 210]</div></div></div>
+                    <div class="question-item"><p><strong>23.</strong> What is the purpose of the exhibit? [cite: 211]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. To explain human civilization [cite: 212]</div></div></div>
+                    <div class="question-item"><p><strong>26.</strong> What do many companies now allow? [cite: 219]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Working from home [cite: 220]</div></div></div>
+                    <div class="question-item"><p><strong>28.</strong> Why did companies continue this policy? [cite: 223]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. It had many benefits [cite: 224]</div></div></div>
+                    <div class="question-item"><p><strong>31.</strong> What skill is Emily trying to improve? [cite: 232]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Speaking [cite: 232]</div></div></div>
+                    <div class="question-item"><p><strong>33.</strong> What does she do to help her pronunciation? [cite: 234]</p><div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. Records herself [cite: 235]</div></div></div>
                 </div>
             </div>
 
@@ -377,89 +503,77 @@
                     <h3>Part A: Short Conversations</h3>
                     
                     <div class="question-item">
-                        <div class="dialog-box"><strong>Dialog:</strong> (Woman): Are you enjoying your coffee? (Man): It tastes extremely bitter this morning.</div>
-                        <p class="q-text">1. What does the man mean?</p>
-                        <div class="q-answer">Jawaban: C. The coffee isn't very good.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Pria tersebut merasa kopinya sangat pahit, yang mengindikasikan ia tidak menyukainya.</div></details>
+                        <div class="dialog-box"><strong>Dialog 1:</strong> (Woman): Are you enjoying your coffee? (Man): It tastes extremely bitter this morning. [cite: 243]</div>
+                        <p><strong>Soal:</strong> What does the man mean? [cite: 245]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. The coffee isn't very good. [cite: 246]</div></div>
                     </div>
 
                     <div class="question-item">
-                        <div class="dialog-box"><strong>Dialog:</strong> (Woman): Can you tell me how often the philosophy class meets? (Man): It meets twice a week for an hour and a half each time.</div>
-                        <p class="q-text">2. What does the man mean?</p>
-                        <div class="q-answer">Jawaban: B. The class meets three hours per week.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">2 kali x 1,5 jam = total 3 jam per minggu.</div></details>
+                        <div class="dialog-box"><strong>Dialog 2:</strong> (Woman): Can you tell me how often the philosophy class meets? [cite: 247] (Man): It meets twice a week for an hour and a half each time. [cite: 248]</div>
+                        <p><strong>Soal:</strong> What does the man mean? [cite: 250]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. The class meets three hours per week. [cite: 252]</div></div>
                     </div>
 
                     <div class="question-item">
-                        <div class="dialog-box"><strong>Dialog:</strong> (Man): I'm tired of just sitting here. (Woman): Relax. I'm sure that the flight will depart within a few minutes.</div>
-                        <p class="q-text">3. What does the woman mean?</p>
-                        <div class="q-answer">Jawaban: D. The plane is going to take off soon.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Depart within a few minutes sama artinya dengan take off soon.</div></details>
+                        <div class="dialog-box"><strong>Dialog 3:</strong> (Man): I'm tired of just sitting here. (Woman): Relax. [cite: 253] I'm sure that the flight will depart within a few minutes. [cite: 254]</div>
+                        <p><strong>Soal:</strong> What does the woman mean? [cite: 256]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">D. The plane is going to take off soon. [cite: 258]</div></div>
                     </div>
 
                     <div class="question-item">
-                        <div class="dialog-box"><strong>Dialog:</strong> (Woman): Have you been able to find an apartment yet? (Man): It's difficult to find affordable housing in New York.</div>
-                        <p class="q-text">8. What does the man mean?</p>
-                        <div class="q-answer">Jawaban: A. Housing within his budget is hard to locate.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Affordable housing merujuk pada perumahan yang sesuai dengan anggarannya (budget).</div></details>
+                        <div class="dialog-box"><strong>Dialog 8:</strong> (Woman): Have you been able to find an apartment yet? [cite: 278] (Man): It's difficult to find affordable housing in New York. [cite: 279]</div>
+                        <p><strong>Soal:</strong> What does the man mean? [cite: 281]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. Housing within his budget is hard to locate. [cite: 283]</div></div>
                     </div>
                     
                     <div class="question-item">
-                        <div class="dialog-box"><strong>Dialog:</strong> (Man): Did Paul get his work done? (Woman): He couldn't finish the assignment because the library was closed.</div>
-                        <p class="q-text">15. What does the woman say about Paul?</p>
-                        <div class="q-answer">Jawaban: D. His homework was incomplete because the library wasn't open.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Couldn't finish = incomplete. Library was closed = wasn't open.</div></details>
+                        <div class="dialog-box"><strong>Dialog 15:</strong> (Man): Did Paul get his work done? (Woman): He couldn't finish the assignment because the library was closed. [cite: 312]</div>
+                        <p><strong>Soal:</strong> What does the woman say about Paul? [cite: 313]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">D. His homework was incomplete because the library wasn't open. [cite: 314]</div></div>
                     </div>
 
                     <div class="question-item">
-                        <div class="dialog-box"><strong>Dialog:</strong> (Man): Did Sally finish that difficult assignment? (Woman): She gave up before she really got started.</div>
-                        <p class="q-text">26. What does the woman say about Sally?</p>
-                        <div class="q-answer">Jawaban: A. She didn't do the work.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Gave up before getting started berarti ia sama sekali tidak mengerjakannya.</div></details>
+                        <div class="dialog-box"><strong>Dialog 26:</strong> (Man): Did Sally finish that difficult assignment? (Woman): She gave up before she really got started. [cite: 364]</div>
+                        <p><strong>Soal:</strong> What does the woman say about Sally? [cite: 366]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. She didn't do the work. [cite: 368]</div></div>
                     </div>
                 </div>
 
                 <div class="reading-card">
-                    <h3>Part B & C: Longer Conversations & Talks</h3>
+                    <h3>Part B: Longer Conversations & Talks</h3>
                     
                     <div class="passage-box">
-                        <strong>Talk 1 (Sierra Club):</strong> The Sierra Club is an organization whose goals are centered on the protection of the environment. It was founded in 1892 in San Francisco by naturalist John Muir... Today, the Sierra Club boasts almost 200,000 members in all 50 states...
+                        <strong>Talk 1 (Sierra Club):</strong> The Sierra Club is an organization whose goals are centered on the protection of the environment. It was founded in 1892 in San Francisco by naturalist John Muir... [cite: 442] Today, the Sierra Club boasts almost 200,000 members in all 50 states... [cite: 442]
                     </div>
                     
                     <div class="question-item">
-                        <p class="q-text">39. What is the main objective of the Sierra Club?</p>
-                        <div class="q-answer">Jawaban: B. To save the natural environment.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Tercantum pada kalimat: "whose goals are centered on the protection of the environment."</div></details>
+                        <p><strong>39.</strong> What is the main objective of the Sierra Club? [cite: 444]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. To save the natural environment. [cite: 446]</div></div>
                     </div>
                     <div class="question-item">
-                        <p class="q-text">40. Approximately how long has the Sierra Club been in existence?</p>
-                        <div class="q-answer">Jawaban: C. For more than a century.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Didirikan tahun 1892, sekarang sudah lebih dari satu abad (100 tahun).</div></details>
+                        <p><strong>40.</strong> Approximately how long has the Sierra Club been in existence? [cite: 447]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. For more than a century. [cite: 448]</div></div>
                     </div>
                     <div class="question-item">
-                        <p class="q-text">41. What area was John Muir especially interested in saving?</p>
-                        <div class="q-answer">Jawaban: C. The Sierra Nevadas.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Tercantum pada teks: "...preserving the natural beauty and harmony of the Sierra Nevadas."</div></details>
+                        <p><strong>41.</strong> What area was John Muir especially interested in saving? [cite: 449]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. The Sierra Nevadas. [cite: 451]</div></div>
                     </div>
 
                     <div class="passage-box">
-                        <strong>Talk 3 (Realism vs Naturalism):</strong> Today's lecture is on the difference between the two literary styles of realism and naturalism. The realist objectively reports on events with the accuracy of the description as the prime motive. The naturalist on the other hand has more of a philosophic bent.
+                        <strong>Talk 3 (Realism vs Naturalism):</strong> Today's lecture is on the difference between the two literary styles of realism and naturalism. [cite: 478] The realist objectively reports on events with the accuracy of the description as the prime motive. The naturalist on the other hand has more of a philosophic bent. [cite: 478]
                     </div>
                     
                     <div class="question-item">
-                        <p class="q-text">47. This talk would probably be given in which of the following courses?</p>
-                        <div class="q-answer">Jawaban: C. Literature.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Ceramah ini membahas "literary styles" (gaya sastra/literatur).</div></details>
+                        <p><strong>47.</strong> This talk would probably be given in which of the following courses? [cite: 480]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">C. Literature. [cite: 482]</div></div>
                     </div>
                     <div class="question-item">
-                        <p class="q-text">48. What point is the speaker trying to make about realism and naturalism?</p>
-                        <div class="q-answer">Jawaban: B. They are somewhat similar but have an essential difference.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Disebutkan bahwa mereka punya kesamaan (similarities) tetapi harus dibedakan (differentiated).</div></details>
+                        <p><strong>48.</strong> What point is the speaker trying to make about realism and naturalism? [cite: 483]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">B. They are somewhat similar but have an essential difference. [cite: 485]</div></div>
                     </div>
                     <div class="question-item">
-                        <p class="q-text">49. Which of the following best describes realism?</p>
-                        <div class="q-answer">Jawaban: A. Objective.</div>
-                        <details><summary>Lihat Penjelasan</summary><div class="answer-content">Tercantum di teks: "The realist objectively reports on events..."</div></details>
+                        <p><strong>49.</strong> Which of the following best describes realism? [cite: 486]</p>
+                        <div class="answer-box"><div class="answer-label">✅ Jawaban</div><div class="answer-text">A. Objective. [cite: 487]</div></div>
                     </div>
                 </div>
 
